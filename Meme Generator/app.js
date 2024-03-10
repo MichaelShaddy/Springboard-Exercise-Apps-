@@ -11,7 +11,7 @@ const memeData = [];
 appTitle.innerHTML = appTitleText;
 
 generateBtn.addEventListener('click', function (evt) {
-    event.preventDefault();
+    evt.preventDefault();
     const memeItem = {
         url: photoUrlInput.value,
         topText: topTextInput.value,
@@ -63,14 +63,15 @@ function generateMeme() {
     }
 }
 
-memeForm.addEventListener('click', function (evt) {
-    const memeImg = evt.target.className === 'memeImg';
-    const deleteOverlay = evt.target.className === 'deleteOverlay';
-    const memeContainer = evt.target;
-    const dataIndex = memeContainer.value;
-    
+memes.addEventListener('click', function (evt) {
+    const memeImg = evt.target.classList.contains('memeImg');
+    const deleteOverlay = evt.target.classList.contains('deleteOverlay');
+    const memeContainer = evt.target.closest('.memeContainer');
+
     if (memeImg || deleteOverlay) {
+        const dataIndex = memeContainer.querySelector('.memeImg').dataset.index;
         memeData.splice(dataIndex, 1);
+        memeContainer.remove();
+        generateMeme();
     }
-}
-)
+});
